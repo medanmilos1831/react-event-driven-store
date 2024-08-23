@@ -1,14 +1,68 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.scss';
+import {
+  ReactEventDrivenStoreProvider,
+  Store,
+  useDispatch,
+  useSelector,
+} from 'src/ReactEventDrivenStore';
+import { reducer, state } from 'src/store';
 
-import NxWelcome from './nx-welcome';
-
-export function App() {
+const SomeComponent = () => {
+  const dispatch = useDispatch();
   return (
-    <div>
-      <NxWelcome title="react-event-driven-store" />
-    </div>
+    <>
+      <div>
+        <h1>SomeComponent</h1>
+      </div>
+      <button
+        onClick={() => {
+          dispatch({
+            payload: 'marko',
+            type: 'update_fname',
+          });
+        }}
+      >
+        marko
+      </button>
+      <button
+        onClick={() => {
+          dispatch({
+            payload: 'milos',
+            type: 'update_fname',
+          });
+        }}
+      >
+        milos
+      </button>
+      <div>
+        <SomeInnerComponent />
+      </div>
+    </>
   );
-}
+};
 
-export default App;
+const SomeInnerComponent = () => {
+  const { value } = useSelector(
+    (state: any) => {
+      return {
+        f: state.fname,
+      };
+    },
+    ['update_fname']
+  );
+  console.log('*****inner*****', value);
+  return (
+    <>
+      <h2>SomeInnerComponent</h2>
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <ReactEventDrivenStoreProvider store={new Store(state, reducer)}>
+      <SomeComponent />
+    </ReactEventDrivenStoreProvider>
+  );
+};
+
+export { App };
