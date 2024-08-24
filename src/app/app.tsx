@@ -43,7 +43,7 @@ const SomeComponent = () => {
 
 const SomeInnerComponent = () => {
   const { value } = useSelector(
-    (state: any) => {
+    (state) => {
       return {
         f: state.fname,
       };
