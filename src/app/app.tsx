@@ -8,6 +8,7 @@ import { reducer, state } from 'src/store';
 
 const SomeComponent = () => {
   const dispatch = useDispatch();
+  console.log('render');
   return (
     <>
       <div>

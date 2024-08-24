@@ -1,12 +1,14 @@
+import { dispatchType } from './types';
+
 class Store {
   private state: any;
   private reducer: any;
-  constructor(state: any, reducer: any) {
+  constructor(state: any, reducer: (state: any, action: dispatchType) => any) {
     this.state = state;
     this.reducer = reducer;
   }
 
-  dispatch = (obj: { payload: any; type: string }, hub: any) => {
+  dispatch = (obj: dispatchType, hub: () => void) => {
     this.state = this.reducer(this.state, obj);
     hub();
   };

@@ -7,15 +7,17 @@ import {
 } from 'react';
 import { ReactEventDrivenStoreContext } from './ReactEventDrivenStoreContext';
 import { EventHubService } from './EventHubService';
+import { Store } from './Store';
+import { dispatchType } from './types';
 
 const ReactEventDrivenStoreProvider = ({
   children,
   store,
-}: PropsWithChildren<{ store: any }>) => {
+}: PropsWithChildren<{ store: Store }>) => {
   return (
     <ReactEventDrivenStoreContext.Provider
       value={{
-        ...store,
+        store,
         eventHub: new EventHubService(),
       }}
     >
@@ -26,17 +28,17 @@ const ReactEventDrivenStoreProvider = ({
 
 const useDispatch = () => {
   const ctx = useContext(ReactEventDrivenStoreContext)!;
-  return (obj: any) => {
-    ctx.dispatch(obj, () => ctx.eventHub.fireEvent(obj.type));
+  return (obj: dispatchType) => {
+    ctx.store.dispatch(obj, () => ctx.eventHub.fireEvent(obj.type));
   };
 };
 
-const useSelector = (selector: any, events: string[]) => {
-  const ctx = useContext(ReactEventDrivenStoreContext);
+const useSelector = (selector: (state: any) => any, events: string[]) => {
+  const ctx = useContext(ReactEventDrivenStoreContext)!;
   const [state, setState] = useState<any>(undefined);
   const listener = useRef(() => {
     setState(() => {
-      return selector(ctx.getState());
+      return selector(ctx.store.getState());
     });
   });
   useEffect(() => {
@@ -50,7 +52,9 @@ const useSelector = (selector: any, events: string[]) => {
     };
   }, []);
   return {
-    value: Object.keys(state ?? {}).length ? state : selector(ctx.getState()),
+    value: Object.keys(state ?? {}).length
+      ? state
+      : selector(ctx.store.getState()),
   };
 };
 

@@ -3,7 +3,7 @@ export class EventHubService extends EventTarget {
     super();
   }
 
-  fireEvent(eventName: string, detail: any) {
-    this.dispatchEvent(new CustomEvent(eventName, { detail }));
+  fireEvent(eventName: string) {
+    this.dispatchEvent(new CustomEvent(eventName));
   }
 }
