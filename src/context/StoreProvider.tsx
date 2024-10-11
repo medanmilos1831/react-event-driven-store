@@ -13,7 +13,7 @@ const StoreContext = createContext<IStore | undefined>(undefined);
 const StoreProvider = ({
   children,
   store,
-}: PropsWithChildren<{ store: IStore }>) => {
+}: PropsWithChildren<{ store: any }>) => {
   const [storeSerivce, _] = useState<IStore>(new StoreService(store));
   return (
     <StoreContext.Provider value={storeSerivce}>
