@@ -1,12 +1,14 @@
 export interface IStore extends EventTarget {
   DISPATCH: (action: { type: string; payload: any }) => any;
   GET_STATE: () => unknown;
-  LISTENER: (
-    selector: (state: unknown) => unknown,
+  LISTENER: <T>(
+    selector: selectorCallbackType<T>,
     render: renderType
   ) => (() => void) | undefined;
-  selectorMap: Map<renderType, any>;
+  selectorMap: selectorMapType;
 }
 
 export type renderType = React.Dispatch<React.SetStateAction<number>>;
 export type selectoType = (state: unknown) => unknown;
+export type selectorCallbackType<T = unknown> = (state: unknown) => T;
+export type selectorMapType<T = unknown> = Map<renderType, T>;

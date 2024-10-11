@@ -2,7 +2,6 @@ import { PERSON_ACTION_TYPES } from '../store/person.types';
 import { useDispatch, useSelector, useStoreClient } from '../context';
 import { DOG_ACTION_TYPES } from '../store/dog.types';
 export const HomePage = () => {
-  // console.log('render HomePage');
   const ctx = useStoreClient();
   const dispatch = useDispatch();
   const { value } = useSelector(
@@ -18,7 +17,6 @@ export const HomePage = () => {
       DOG_ACTION_TYPES.INC_AGE_DOG,
     ]
   );
-  console.log('selector', value);
   const incAge = () => {
     dispatch({
       type: PERSON_ACTION_TYPES.INC_AGE,

@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { IStore } from './store.types';
+import { IStore, selectorCallbackType } from './store.types';
 import { StoreService } from './StoreService';
 
 const StoreContext = createContext<{ store: IStore } | undefined>(undefined);
@@ -36,13 +36,13 @@ const useDispatch = () => {
   return ctx.store.DISPATCH;
 };
 
-function useSelector<T>(callback: any, dep: string[]) {
+function useSelector<T>(callback: selectorCallbackType<T>, dep: string[]) {
   const ctx = useContext(StoreContext)!;
 
   const [_, render] = useState<number>(0);
   let selector = useRef<any>(null);
   if (!selector.current) {
-    selector.current = ctx.store.LISTENER(callback, render);
+    selector.current = ctx.store.LISTENER<T>(callback, render);
   }
 
   // EVENT REGISTRATION
@@ -58,7 +58,7 @@ function useSelector<T>(callback: any, dep: string[]) {
   }, []);
   // END :: EVENT REGISTRATION
   return {
-    value: ctx.store.selectorMap.get(render),
+    value: ctx.store.selectorMap.get(render) as T,
     getState: ctx.store.GET_STATE(),
   };
 }
