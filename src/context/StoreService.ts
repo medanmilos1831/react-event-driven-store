@@ -1,21 +1,21 @@
-import { renderType, selectoType } from './store.types';
+import {
+  actionType,
+  reducerType,
+  renderType,
+  selectoType,
+} from './store.types';
 
 export class StoreService extends EventTarget {
   private state: unknown = undefined;
-  private reducer: any;
+  private reducer!: reducerType;
   selectorMap = new Map();
-  constructor(reducer: any) {
+  constructor(reducer: reducerType) {
     super();
-    if (reducer.rootState) {
-      this.state = reducer.rootState;
-      this.reducer = reducer.reducer;
-    } else {
-      this.state = reducer(undefined, {});
-      this.reducer = reducer;
-    }
+    this.state = reducer(undefined, {});
+    this.reducer = reducer;
   }
 
-  DISPATCH = (action: { type: string; payload: any }) => {
+  DISPATCH = (action: actionType) => {
     this.state = this.reducer(this.state, action);
     const customEvent = new CustomEvent(action.type);
     this.dispatchEvent(customEvent);

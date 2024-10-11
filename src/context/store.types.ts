@@ -12,3 +12,9 @@ export type renderType = React.Dispatch<React.SetStateAction<number>>;
 export type selectoType = (state: unknown) => unknown;
 export type selectorCallbackType<T = unknown> = (state: unknown) => T;
 export type selectorMapType<T = unknown> = Map<renderType, T>;
+export type actionType = { type: string; payload: string };
+export type reducerType = (
+  state: unknown,
+  action: actionType | {},
+  root?: unknown
+) => unknown;

@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { IStore, selectorCallbackType } from './store.types';
+import { actionType, IStore, selectorCallbackType } from './store.types';
 import { StoreService } from './StoreService';
 
 const StoreContext = createContext<IStore | undefined>(undefined);
@@ -67,17 +67,14 @@ const combineReducer = (param: { [key: string]: any }) => {
     });
     return rootState;
   })();
-  return {
-    rootState,
-    reducer: (state = rootState, action: any) => {
-      Object.entries(param).forEach(([key, _]) => {
-        state = {
-          ...state,
-          [key]: param[key](state[key], action, rootState),
-        };
-      });
-      return state;
-    },
+  return (state = rootState, action: actionType) => {
+    Object.entries(param).forEach(([key, _]) => {
+      state = {
+        ...state,
+        [key]: param[key](state[key], action, rootState),
+      };
+    });
+    return state;
   };
 };
 

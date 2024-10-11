@@ -6,6 +6,7 @@ export const HomePage = () => {
   const dispatch = useDispatch();
   const { value } = useSelector(
     (state: any) => {
+      console.log('state', state);
       return {
         personAge: state.person.age,
         dogAge: state.dog.age,
@@ -17,6 +18,7 @@ export const HomePage = () => {
       DOG_ACTION_TYPES.INC_AGE_DOG,
     ]
   );
+  console.log('value', value);
   const incAge = () => {
     dispatch({
       type: PERSON_ACTION_TYPES.INC_AGE,
