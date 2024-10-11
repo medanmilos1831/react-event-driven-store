@@ -10,6 +10,13 @@ import { actionType, IStore, selectorCallbackType } from './store.types';
 import { StoreService } from './StoreService';
 
 const StoreContext = createContext<IStore | undefined>(undefined);
+
+/**
+ * StoreProvider component that wraps the app and provides a store context.
+ *
+ * @param {PropsWithChildren<{store: any}>} props - The children components and store object.
+ * @returns {JSX.Element} The context provider with the store service.
+ */
 const StoreProvider = ({
   children,
   store,
@@ -22,16 +29,34 @@ const StoreProvider = ({
   );
 };
 
+/**
+ * Custom hook to access the store client from the context.
+ *
+ * @returns {IStore} The store context value.
+ */
 const useStoreClient = () => {
   const ctx = useContext(StoreContext)!;
   return ctx;
 };
 
+/**
+ * Custom hook to dispatch actions to the store.
+ *
+ * @returns {function} The dispatch function from the store context.
+ */
 const useDispatch = () => {
   const ctx = useContext(StoreContext)!;
   return ctx.DISPATCH;
 };
 
+/**
+ * Custom hook to select a part of the store state and subscribe to updates.
+ *
+ * @template T
+ * @param {selectorCallbackType<T>} callback - The selector callback function to extract state.
+ * @param {string[]} dep - List of dependency events for updating the selector.
+ * @returns {{ value: T, getState: function }} The selected state value and getState method.
+ */
 function useSelector<T>(callback: selectorCallbackType<T>, dep: string[]) {
   const ctx = useContext(StoreContext)!;
 
@@ -59,6 +84,12 @@ function useSelector<T>(callback: selectorCallbackType<T>, dep: string[]) {
   };
 }
 
+/**
+ * Combines multiple reducers into one root reducer.
+ *
+ * @param {object} param - An object where each key is a reducer function.
+ * @returns {function} A root reducer function handling all sub-reducers.
+ */
 const combineReducer = (param: { [key: string]: any }) => {
   const rootState = (() => {
     let rootState: { [key: string]: any } = {};
