@@ -9,18 +9,14 @@ import {
 import { IStore, selectorCallbackType } from './store.types';
 import { StoreService } from './StoreService';
 
-const StoreContext = createContext<{ store: IStore } | undefined>(undefined);
+const StoreContext = createContext<IStore | undefined>(undefined);
 const StoreProvider = ({
   children,
   store,
-}: PropsWithChildren<{ store: any }>) => {
+}: PropsWithChildren<{ store: IStore }>) => {
   const [storeSerivce, _] = useState<IStore>(new StoreService(store));
   return (
-    <StoreContext.Provider
-      value={{
-        store: storeSerivce,
-      }}
-    >
+    <StoreContext.Provider value={storeSerivce}>
       {children}
     </StoreContext.Provider>
   );
@@ -33,7 +29,7 @@ const useStoreClient = () => {
 
 const useDispatch = () => {
   const ctx = useContext(StoreContext)!;
-  return ctx.store.DISPATCH;
+  return ctx.DISPATCH;
 };
 
 function useSelector<T>(callback: selectorCallbackType<T>, dep: string[]) {
@@ -42,24 +38,24 @@ function useSelector<T>(callback: selectorCallbackType<T>, dep: string[]) {
   const [_, render] = useState<number>(0);
   let selector = useRef<any>(null);
   if (!selector.current) {
-    selector.current = ctx.store.LISTENER<T>(callback, render);
+    selector.current = ctx.LISTENER<T>(callback, render);
   }
 
   // EVENT REGISTRATION
   useEffect(() => {
     dep.forEach((eventName: string) => {
-      ctx.store.addEventListener(eventName, selector.current);
+      ctx.addEventListener(eventName, selector.current);
     });
     return () => {
       dep.forEach((eventName: string) => {
-        ctx.store.removeEventListener(eventName, selector.current);
+        ctx.removeEventListener(eventName, selector.current);
       });
     };
   }, []);
   // END :: EVENT REGISTRATION
   return {
-    value: ctx.store.selectorMap.get(render) as T,
-    getState: ctx.store.GET_STATE(),
+    value: ctx.selectorMap.get(render) as T,
+    getState: ctx.GET_STATE(),
   };
 }
 
