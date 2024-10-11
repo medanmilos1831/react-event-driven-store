@@ -1,10 +1,10 @@
 {
-  "name": "react-event-driven-store",
+  "name": "react-practice",
   "$schema": "node_modules/nx/schemas/project-schema.json",
   "includedScripts": [],
   "sourceRoot": "./src",
   "projectType": "application",
   "tags": [],
-  "// targets": "to see all targets run: nx show project react-event-driven-store --web",
+  "// targets": "to see all targets run: nx show project react-practice --web",
   "targets": {}
 }

@@ -1,69 +1,18 @@
-import {
-  ReactEventDrivenStoreProvider,
-  Store,
-  useDispatch,
-  useSelector,
-} from 'src/ReactEventDrivenStore';
-import { reducer, state } from 'src/store';
+import { StoreProvider, combineReducer } from '../context';
+import { HomePage } from '../pages';
+import { reducerPerson, reducerDog } from '../store';
 
-const SomeComponent = () => {
-  const dispatch = useDispatch();
-  console.log('render');
+export const App = () => {
   return (
     <>
-      <div>
-        <h1>SomeComponent</h1>
-      </div>
-      <button
-        onClick={() => {
-          dispatch({
-            payload: 'marko',
-            type: 'update_fname',
-          });
-        }}
+      <StoreProvider
+        store={combineReducer({
+          person: reducerPerson,
+          dog: reducerDog,
+        })}
       >
-        marko
-      </button>
-      <button
-        onClick={() => {
-          dispatch({
-            payload: 'milos',
-            type: 'update_fname',
-          });
-        }}
-      >
-        milos
-      </button>
-      <div>
-        <SomeInnerComponent />
-      </div>
+        <HomePage />
+      </StoreProvider>
     </>
   );
 };
-
-const SomeInnerComponent = () => {
-  const { value } = useSelector(
-    (state) => {
-      return {
-        f: state.fname,
-      };
-    },
-    ['update_fname']
-  );
-  console.log('*****inner*****', value);
-  return (
-    <>
-      <h2>SomeInnerComponent</h2>
-    </>
-  );
-};
-
-const App = () => {
-  return (
-    <ReactEventDrivenStoreProvider store={new Store(state, reducer)}>
-      <SomeComponent />
-    </ReactEventDrivenStoreProvider>
-  );
-};
-
-export { App };
