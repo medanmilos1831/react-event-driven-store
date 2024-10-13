@@ -1,15 +1,51 @@
-import { StoreProvider, combineReducer } from '../context';
+import { combineReducer, StoreProvider } from '../context';
 import { HomePage } from '../pages';
-import { reducerPerson, reducerDog } from '../store';
 
+const initStatePerson = { fname: 'John', lname: 'Smit', age: 25 };
+const initStateCar = { brand: 'Audi', color: 'black' };
+combineReducer({
+  person: (state = initStatePerson, { type, payload }: any, rootState: any) => {
+    switch (type) {
+      case 'INC_AGE':
+        return {
+          ...state,
+          age: state.age + payload,
+        };
+      default:
+        return state;
+    }
+  },
+  car: (state = initStateCar, { type, payload }: any, rootState: any) => {
+    switch (type) {
+      case 'CHANGE_COLOR':
+        return {
+          ...state,
+          color: payload,
+        };
+      default:
+        return state;
+    }
+  },
+});
 export const App = () => {
   return (
     <>
       <StoreProvider
-        store={combineReducer({
-          person: reducerPerson,
-          dog: reducerDog,
-        })}
+        store={(
+          state = initStatePerson,
+          { type, payload }: any,
+          rootState: any
+        ) => {
+          switch (type) {
+            case 'INC_AGE':
+              return {
+                ...state,
+                age: state.age + payload,
+              };
+            default:
+              return state;
+          }
+        }}
       >
         <HomePage />
       </StoreProvider>

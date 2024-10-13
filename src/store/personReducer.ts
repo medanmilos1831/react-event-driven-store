@@ -15,10 +15,6 @@ const reducerPerson = (
         ...state,
         age: state.age + 1,
       };
-    // console.log('ssss', state);
-    case PERSON_ACTION_TYPES.UPDATE_NAME:
-      state.fname = payload;
-      return state;
     default:
       return state;
   }
