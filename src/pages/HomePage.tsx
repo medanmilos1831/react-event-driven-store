@@ -3,14 +3,6 @@ import { SomeComponent } from '../components';
 import { SelectorSuspense, useDispatch, useSelector } from '../context';
 export const HomePage = () => {
   const dispatch = useDispatch();
-  // const { value } = useSelector(
-  //   (state: any) => {
-  //     return {
-  //       personAge: state.age,
-  //     };
-  //   },
-  //   ['INC_AGE']
-  // );
   const incAge = () => {
     dispatch({
       type: 'INC_AGE',
