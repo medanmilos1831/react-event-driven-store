@@ -46,7 +46,7 @@ const SelectorSuspense = ({
  * @param {ItemProps} props - The props for the Item component.
  * @returns {JSX.Element} The rendered component or the result of the children function.
  */
-const Item = ({ children }: PropsWithChildren | ItemProps) => {
+function Item<T = any>({ children }: PropsWithChildren | ItemProps<T>) {
   const selectorSuspenseContext = useContext(SelectorSuspenseContext);
   if (isValidElement(children)) {
     return (
@@ -60,7 +60,7 @@ const Item = ({ children }: PropsWithChildren | ItemProps) => {
   }
 
   return null;
-};
+}
 
 /**
  * Custom hook to access the value from the SelectorSuspenseItemContext.

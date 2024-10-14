@@ -6,7 +6,7 @@ const SomeComponent = () => {
       <h1>SomeComponent</h1>
       <br />
       <SelectorSuspense.Item>
-        {(value: any) => {
+        {(value) => {
           return <>{value.personAge}</>;
         }}
       </SelectorSuspense.Item>

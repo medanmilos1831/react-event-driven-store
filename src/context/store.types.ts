@@ -106,4 +106,4 @@ export interface ISelectorSuspense {
  * @typedef {Object} ItemProps
  * @property {(value: any) => JSX.Element} children - A function that receives the context value and returns a JSX element.
  */
-export type ItemProps = { children: (value: any) => JSX.Element };
+export type ItemProps<T> = { children: (value: T) => JSX.Element };

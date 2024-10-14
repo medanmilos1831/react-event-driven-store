@@ -28,6 +28,12 @@ export const HomePage = () => {
         <SelectorSuspense.Item>
           <SomeComponentTwo />
         </SelectorSuspense.Item>
+
+        <SelectorSuspense.Item>
+          {(value) => {
+            return <>{value.personAge}</>;
+          }}
+        </SelectorSuspense.Item>
         <button onClick={incAge}>inc age</button>
       </div>
     </SelectorSuspense>
