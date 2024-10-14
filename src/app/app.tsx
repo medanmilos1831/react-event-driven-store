@@ -1,4 +1,4 @@
-import { combineReducer, StoreProvider } from '../context';
+import { combineReducer, EventStoreProvider } from '../context';
 import { HomePage } from '../pages';
 
 const initStatePerson = { fname: 'John', lname: 'Smit', age: 25 };
@@ -30,7 +30,7 @@ combineReducer({
 export const App = () => {
   return (
     <>
-      <StoreProvider
+      <EventStoreProvider
         store={(
           state = initStatePerson,
           { type, payload }: any,
@@ -48,7 +48,7 @@ export const App = () => {
         }}
       >
         <HomePage />
-      </StoreProvider>
+      </EventStoreProvider>
     </>
   );
 };

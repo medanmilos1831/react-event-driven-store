@@ -12,12 +12,12 @@ import { StoreService } from './StoreService';
 const StoreContext = createContext<IStore | undefined>(undefined);
 
 /**
- * StoreProvider component that wraps the app and provides a store context.
+ * EventStoreProvider component that wraps the app and provides a store context.
  *
  * @param {PropsWithChildren<{store: any}>} props - The children components and store object.
  * @returns {JSX.Element} The context provider with the store service.
  */
-const StoreProvider = ({
+const EventStoreProvider = ({
   children,
   store,
 }: PropsWithChildren<{ store: any }>) => {
@@ -111,7 +111,7 @@ const combineReducer = (param: { [key: string]: any }) => {
 
 export {
   combineReducer,
-  StoreProvider,
+  EventStoreProvider,
   useDispatch,
   useSelector,
   useStoreClient,
