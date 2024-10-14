@@ -89,3 +89,21 @@ export type reducerType = (
   action: actionType | {},
   root?: unknown
 ) => unknown;
+
+/**
+ * Interface for the options provided to the SelectorSuspense component.
+ * @interface ISelectorSuspense
+ * @property {string[]} events - Array of event names to listen for.
+ * @property {selectorCallbackType} selector - The selector callback function.
+ */
+export interface ISelectorSuspense {
+  events: string[];
+  selector: selectorCallbackType;
+}
+
+/**
+ * Props for the Item component.
+ * @typedef {Object} ItemProps
+ * @property {(value: any) => JSX.Element} children - A function that receives the context value and returns a JSX element.
+ */
+export type ItemProps = { children: (value: any) => JSX.Element };

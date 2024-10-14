@@ -4,7 +4,7 @@ import {
   PropsWithChildren,
   useContext,
 } from 'react';
-import { selectorCallbackType } from './store.types';
+import { ISelectorSuspense, ItemProps } from './store.types';
 import { useSelector } from './StoreProvider';
 
 /**
@@ -18,26 +18,6 @@ const SelectorSuspenseContext = createContext<any>(undefined);
  * @type {React.Context<any>}
  */
 const SelectorSuspenseItemContext = createContext<any>(undefined);
-
-/**
- * Interface for the options provided to the SelectorSuspense component.
- * @interface ISelectorSuspense
- * @property {string[]} events - Array of event names to listen for.
- * @property {selectorCallbackType} selector - The selector callback function.
- */
-interface ISelectorSuspense {
-  events: string[];
-  selector: selectorCallbackType;
-}
-
-/**
- * Props for the Item component.
- * @typedef {Object} ItemProps
- * @property {(value: any) => JSX.Element} children - A function that receives the context value and returns a JSX element.
- */
-type ItemProps = {
-  children: (value: any) => JSX.Element;
-};
 
 /**
  * SelectorSuspense component that provides a value from the useSelector hook
@@ -66,7 +46,7 @@ const SelectorSuspense = ({
  * @param {ItemProps} props - The props for the Item component.
  * @returns {JSX.Element} The rendered component or the result of the children function.
  */
-const Item = ({ children }: any) => {
+const Item = ({ children }: PropsWithChildren | ItemProps) => {
   const selectorSuspenseContext = useContext(SelectorSuspenseContext);
   if (isValidElement(children)) {
     return (
@@ -75,7 +55,11 @@ const Item = ({ children }: any) => {
       </SelectorSuspenseItemContext.Provider>
     );
   }
-  return <>{children(selectorSuspenseContext)}</>;
+  if (typeof children === 'function') {
+    return <>{children(selectorSuspenseContext)}</>;
+  }
+
+  return null;
 };
 
 /**
