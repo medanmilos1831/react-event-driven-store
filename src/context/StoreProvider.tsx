@@ -10,24 +10,40 @@ import { actionType, IStore, selectorCallbackType } from './store.types';
 import { StoreService } from './StoreService';
 
 const StoreContext = createContext<IStore | undefined>(undefined);
-
+export interface ModuleType<T = unknown> {
+  moduleName: string;
+  state: T;
+  mutation: { [key: string]: (this: T) => void };
+}
 /**
  * EventStoreProvider component that wraps the app and provides a store context.
  *
  * @param {PropsWithChildren<{store: any}>} props - The children components and store object.
  * @returns {JSX.Element} The context provider with the store service.
  */
-const EventStoreProvider = ({
+function EventStoreProvider<T = unknown>({
   children,
   store,
-}: PropsWithChildren<{ store: any }>) => {
+  modules,
+}: PropsWithChildren<{ store: any; modules?: ModuleType<T> }>) {
   const [storeSerivce, _] = useState<IStore>(new StoreService(store));
   return (
     <StoreContext.Provider value={storeSerivce}>
-      {children}
+      <>
+        <div>
+          <button
+            onClick={() => {
+              modules?.mutation.inc.call(modules.state);
+            }}
+          >
+            click me
+          </button>
+        </div>
+        <div>{children}</div>
+      </>
     </StoreContext.Provider>
   );
-};
+}
 
 /**
  * Custom hook to access the store client from the context.
