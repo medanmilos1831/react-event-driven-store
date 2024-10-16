@@ -15,17 +15,17 @@ class ModuleService<T> {
    *
    * @param {actionType} action - The action object containing type and payload.
    */
-  DISPATCH = ({ event, handler, payload, moduleName }: actionType) => {
-    // handler.call(this.modules[moduleName].state, payload);
-    // console.log('this', this.modules['counter'].mutation.inc);
-    // this.modules['counter'].mutation.inc.call(
-    //   this.modules['counter'].state,
-    //   10
-    // );
-    // this.state = this.reducer(this.state, action);
-    const customEvent = new CustomEvent(event);
-    // this.dispatchEvent(customEvent);
-  };
+  // DISPATCH = ({ event, handler, payload, moduleName }: actionType) => {
+  //   // handler.call(this.modules[moduleName].state, payload);
+  //   // console.log('this', this.modules['counter'].mutation.inc);
+  //   // this.modules['counter'].mutation.inc.call(
+  //   //   this.modules['counter'].state,
+  //   //   10
+  //   // );
+  //   // this.state = this.reducer(this.state, action);
+  //   const customEvent = new CustomEvent(event);
+  //   // this.dispatchEvent(customEvent);
+  // };
 
   /**
    * Returns the current state.
