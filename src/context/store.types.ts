@@ -12,7 +12,7 @@ export interface IStore extends EventTarget {
    * @param {{ type: string; payload: any }} action - The action object with a type and payload.
    * @returns {any} The result of the dispatch action.
    */
-  DISPATCH: (action: { type: string; payload: any }) => any;
+  DISPATCH: (action: actionType) => void;
 
   /**
    * Retrieves the current state of the store.
@@ -31,7 +31,8 @@ export interface IStore extends EventTarget {
    */
   LISTENER: <T>(
     selector: selectorCallbackType<T>,
-    render: renderType
+    render: renderType,
+    moduleName: string
   ) => (() => void) | undefined;
 
   /**
@@ -54,7 +55,7 @@ export type renderType = React.Dispatch<React.SetStateAction<number>>;
  *
  * @typedef {(state: unknown) => unknown} selectoType
  */
-export type selectoType = (state: unknown) => unknown;
+export type selectoType = () => unknown;
 
 /**
  * Type for a callback function that selects and returns a part of the state.
@@ -62,7 +63,7 @@ export type selectoType = (state: unknown) => unknown;
  * @template T
  * @typedef {(state: unknown) => T} selectorCallbackType
  */
-export type selectorCallbackType<T = unknown> = (state: unknown) => T;
+export type selectorCallbackType<T = unknown> = () => T;
 
 /**
  * Type representing a map that associates render functions with selector values.
@@ -77,7 +78,12 @@ export type selectorMapType<T = unknown> = Map<renderType, T>;
  *
  * @typedef {{ type: string; payload: string }} actionType
  */
-export type actionType = { type: string; payload: string };
+export type actionType = {
+  moduleName: string;
+  payload: any;
+  event: string;
+  handler: Function;
+};
 
 /**
  * Type representing a reducer function that updates the store's state.
@@ -107,3 +113,10 @@ export interface ISelectorSuspense {
  * @property {(value: any) => JSX.Element} children - A function that receives the context value and returns a JSX element.
  */
 export type ItemProps<T> = { children: (value: T) => JSX.Element };
+
+export interface ModuleType<T = unknown> {
+  moduleName: string;
+  state: T;
+  mutation: { [key: string]: (this: T, args: any) => void };
+  getters: { [key: string]: (this: T, args: any) => any };
+}

@@ -6,15 +6,15 @@ import {
   useRef,
   useState,
 } from 'react';
-import { actionType, IStore, selectorCallbackType } from './store.types';
+import {
+  actionType,
+  IStore,
+  ModuleType,
+  selectorCallbackType,
+} from './store.types';
 import { StoreService } from './StoreService';
 
 const StoreContext = createContext<IStore | undefined>(undefined);
-export interface ModuleType<T = unknown> {
-  moduleName: string;
-  state: T;
-  mutation: { [key: string]: (this: T) => void };
-}
 /**
  * EventStoreProvider component that wraps the app and provides a store context.
  *
@@ -25,20 +25,11 @@ function EventStoreProvider<T = unknown>({
   children,
   store,
   modules,
-}: PropsWithChildren<{ store: any; modules?: ModuleType<T> }>) {
-  const [storeSerivce, _] = useState<IStore>(new StoreService(store));
+}: PropsWithChildren<{ store: any; modules: ModuleType<T>[] }>) {
+  const [storeSerivce, _] = useState<IStore>(new StoreService(store, modules));
   return (
     <StoreContext.Provider value={storeSerivce}>
       <>
-        <div>
-          <button
-            onClick={() => {
-              modules?.mutation.inc.call(modules.state);
-            }}
-          >
-            click me
-          </button>
-        </div>
         <div>{children}</div>
       </>
     </StoreContext.Provider>
@@ -73,13 +64,18 @@ const useDispatch = () => {
  * @param {string[]} dep - List of dependency events for updating the selector.
  * @returns {{ value: T, getState: function }} The selected state value and getState method.
  */
-function useSelector<T>(callback: selectorCallbackType<T>, dep: string[]) {
+function useSelector<T>(
+  callback: selectorCallbackType<T>,
+  dep: string[],
+  moduleName: string
+) {
   const ctx = useContext(StoreContext)!;
+  console.log('undefined', callback.name);
 
   const [_, render] = useState<number>(0);
   let selector = useRef<any>(null);
   if (!selector.current) {
-    selector.current = ctx.LISTENER<T>(callback, render);
+    selector.current = ctx.LISTENER<T>(callback, render, moduleName);
   }
 
   // EVENT REGISTRATION
@@ -96,7 +92,6 @@ function useSelector<T>(callback: selectorCallbackType<T>, dep: string[]) {
   // END :: EVENT REGISTRATION
   return {
     value: ctx.selectorMap.get(render) as T,
-    getState: ctx.GET_STATE(),
   };
 }
 
@@ -125,10 +120,25 @@ const combineReducer = (param: { [key: string]: any }) => {
   };
 };
 
+const useModule = (moduleName: string) => {
+  const ctx = useContext(StoreContext) as any;
+  return {
+    mutations: { ...ctx.modules[moduleName].mutation },
+    getters: { ...ctx.modules[moduleName].getters },
+    dispatch: function ({ ...args }) {
+      ctx.DISPATCH({
+        moduleName,
+        ...args,
+      });
+    },
+  };
+};
+
 export {
   combineReducer,
   EventStoreProvider,
   useDispatch,
   useSelector,
   useStoreClient,
+  useModule,
 };

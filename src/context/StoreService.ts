@@ -1,5 +1,6 @@
 import {
   actionType,
+  ModuleType,
   reducerType,
   renderType,
   selectoType,
@@ -8,7 +9,7 @@ import {
 /**
  * StoreService class that extends EventTarget for managing state and actions.
  */
-export class StoreService extends EventTarget {
+export class StoreService<T> extends EventTarget {
   /**
    * @private
    * @type {unknown}
@@ -26,16 +27,23 @@ export class StoreService extends EventTarget {
    * @type {Map<renderType, any>}
    */
   selectorMap = new Map();
+  modules: any = {};
 
   /**
    * Creates an instance of StoreService.
    *
    * @param {reducerType} reducer - The reducer function for handling state updates.
    */
-  constructor(reducer: reducerType) {
+  constructor(reducer: reducerType, modules: ModuleType<T>[]) {
+    // console.log('this', modules);
     super();
     this.state = reducer(undefined, {});
     this.reducer = reducer;
+    // this.modules = modules;
+    modules.forEach(({ moduleName, ...rest }) => {
+      this.modules[moduleName] = rest;
+      rest.getters;
+    });
   }
 
   /**
@@ -43,9 +51,15 @@ export class StoreService extends EventTarget {
    *
    * @param {actionType} action - The action object containing type and payload.
    */
-  DISPATCH = (action: actionType) => {
-    this.state = this.reducer(this.state, action);
-    const customEvent = new CustomEvent(action.type);
+  DISPATCH = ({ event, handler, payload, moduleName }: actionType) => {
+    handler.call(this.modules[moduleName].state, payload);
+    // console.log('this', this.modules['counter'].mutation.inc);
+    // this.modules['counter'].mutation.inc.call(
+    //   this.modules['counter'].state,
+    //   10
+    // );
+    // this.state = this.reducer(this.state, action);
+    const customEvent = new CustomEvent(event);
     this.dispatchEvent(customEvent);
   };
 
@@ -65,14 +79,17 @@ export class StoreService extends EventTarget {
    * @param {renderType} render - A function to trigger a re-render when the state changes.
    * @returns {function|undefined} A function that checks for state updates and triggers renders.
    */
-  LISTENER = (selector: selectoType, render: renderType) => {
+  LISTENER = (
+    selector: selectoType,
+    render: renderType,
+    moduleName: string
+  ) => {
     if (this.selectorMap.has(render)) return;
-
-    let initValue = selector(this.state);
+    let initValue = selector.call(this.modules[moduleName].state);
     this.selectorMap.set(render, initValue);
 
     return () => {
-      let newSelectorValue = selector(this.state);
+      let newSelectorValue = selector.call(this.modules[moduleName].state);
       if (
         JSON.stringify(newSelectorValue) !==
         JSON.stringify(this.selectorMap.get(render))

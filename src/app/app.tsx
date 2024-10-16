@@ -1,6 +1,7 @@
 import { CounterModule } from '../modules';
-import { combineReducer, EventStoreProvider, ModuleType } from '../context';
+import { combineReducer, EventStoreProvider } from '../context';
 import { HomePage } from '../pages';
+import { ModuleType } from 'src/context/store.types';
 
 const initStatePerson = { fname: 'John', lname: 'Smit', age: 25 };
 const initStateCar = { brand: 'Audi', color: 'black' };
@@ -47,22 +48,27 @@ export const App = () => {
               return state;
           }
         }}
-        modules={
+        modules={[
           {
             moduleName: 'counter',
             state: {
               counter: 0,
             },
             mutation: {
-              inc() {
-                this.counter = this.counter + 1;
+              inc(value) {
+                this.counter = this.counter + value;
               },
               dec() {
                 this.counter = this.counter - 1;
               },
             },
-          } as ModuleType<{ counter: number }>
-        }
+            getters: {
+              getCounter() {
+                return this.counter;
+              },
+            },
+          } as ModuleType<{ counter: number }>,
+        ]}
       >
         <HomePage />
       </EventStoreProvider>
