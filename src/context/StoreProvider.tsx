@@ -25,8 +25,8 @@ function EventStoreProvider<T = unknown>({
   children,
   store,
   modules,
-}: PropsWithChildren<{ store: any; modules: ModuleType<T>[] }>) {
-  const [storeSerivce, _] = useState<IStore>(new StoreService(store, modules));
+}: PropsWithChildren<{ store: any; modules: any }>) {
+  const [storeSerivce, _] = useState<any>(new StoreService(store, modules));
   return (
     <StoreContext.Provider value={storeSerivce}>
       <>
@@ -122,16 +122,18 @@ const combineReducer = (param: { [key: string]: any }) => {
 
 const useModule = (moduleName: string) => {
   const ctx = useContext(StoreContext) as any;
-  return {
-    mutations: { ...ctx.modules[moduleName].mutation },
-    getters: { ...ctx.modules[moduleName].getters },
-    dispatch: function ({ ...args }) {
-      ctx.DISPATCH({
-        moduleName,
-        ...args,
-      });
-    },
-  };
+  // console.log('ctx', ctx.GET_MODULE(moduleName));
+  return ctx.GET_MODULE(moduleName);
+  // return {
+  //   // mutations: { ...ctx.modules[moduleName].mutation },
+  //   // getters: { ...ctx.modules[moduleName].getters },
+  //   // dispatch: function ({ ...args }) {
+  //   //   ctx.DISPATCH({
+  //   //     moduleName,
+  //   //     ...args,
+  //   //   });
+  //   // },
+  // };
 };
 
 export {

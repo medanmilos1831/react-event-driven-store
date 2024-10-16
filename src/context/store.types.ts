@@ -79,10 +79,9 @@ export type selectorMapType<T = unknown> = Map<renderType, T>;
  * @typedef {{ type: string; payload: string }} actionType
  */
 export type actionType = {
-  moduleName: string;
   payload: any;
-  event: string;
-  handler: Function;
+  event?: string;
+  mutation: Function;
 };
 
 /**

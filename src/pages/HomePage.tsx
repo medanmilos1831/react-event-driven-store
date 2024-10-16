@@ -9,26 +9,32 @@ import {
 import { useContext, useEffect } from 'react';
 export const HomePage = () => {
   // const dispatch = useDispatch();
-  const { mutations, dispatch, getters } = useModule('counter');
+  const { mutate, mutations } = useModule('counter');
+  // console.log('MODULE', state);
   const incAge = () => {
-    dispatch({
+    mutate({
       payload: 1,
       event: 'INC_AGE',
-      handler: mutations.inc,
+      mutation: mutations.inc,
     });
+    // dispatch({
+    //   payload: 1,
+    //   event: 'INC_AGE',
+    //   handler: mutations.inc,
+    // });
   };
 
-  const { value } = useSelector<any>(
-    getters.getCounter,
-    ['INC_AGE'],
-    'counter'
-  );
-  console.log('getters', getters);
-  console.log('selector value', value);
+  // const { value } = useSelector<any>(
+  //   getters.getCounter,
+  //   ['INC_AGE'],
+  //   'counter'
+  // );
+  // console.log('getters', getters);
+  // console.log('selector value', value);
   return (
     <>
       <button onClick={incAge}>inc age</button>
-      <span>{value}</span>
+      {/* <span>{value}</span> */}
     </>
     // <SelectorSuspense
     //   options={{

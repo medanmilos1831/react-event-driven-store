@@ -56,7 +56,7 @@ export const App = () => {
             },
             mutation: {
               inc(value) {
-                this.counter = this.counter + value;
+                this.counter = this.counter + value.payload;
               },
               dec() {
                 this.counter = this.counter - 1;
