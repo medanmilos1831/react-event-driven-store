@@ -35,33 +35,6 @@ class ModuleService<T> {
   GET_STATE = () => {
     return this.state;
   };
-
-  /**
-   * Registers a listener for state changes based on a selector function.
-   *
-   * @param {selectoType} selector - A function to select part of the state.
-   * @param {renderType} render - A function to trigger a re-render when the state changes.
-   * @returns {function|undefined} A function that checks for state updates and triggers renders.
-   */
-  LISTENER = (
-    selector: selectoType,
-    render: renderType,
-    moduleName: string
-  ) => {
-    // if (this.selectorMap.has(render)) return;
-    // let initValue = selector.call(this.modules[moduleName].state);
-    // this.selectorMap.set(render, initValue);
-    // return () => {
-    //   let newSelectorValue = selector.call(this.modules[moduleName].state);
-    //   if (
-    //     JSON.stringify(newSelectorValue) !==
-    //     JSON.stringify(this.selectorMap.get(render))
-    //   ) {
-    //     this.selectorMap.set(render, newSelectorValue);
-    //     render((prev) => prev + 1);
-    //   }
-    // };
-  };
 }
 
 export { ModuleService };

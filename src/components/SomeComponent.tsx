@@ -1,15 +1,18 @@
-import { SelectorSuspense } from '../context';
+import { useSelector } from '../context';
 
 const SomeComponent = () => {
+  const v = useSelector(
+    (state) => {
+      console.log('****************************', state);
+      return 32;
+    },
+    ['INC_AGE'],
+    'counter'
+  );
+  // console.log('dsdshkdsjds', v);
   return (
     <>
-      <h1>SomeComponent</h1>
-      <br />
-      <SelectorSuspense.Item>
-        {(value) => {
-          return <>{value.personAge}</>;
-        }}
-      </SelectorSuspense.Item>
+      <span>SomeComponent</span>
     </>
   );
 };

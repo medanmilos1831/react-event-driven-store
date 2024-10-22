@@ -12,7 +12,7 @@ export interface IStore extends EventTarget {
    * @param {{ type: string; payload: any }} action - The action object with a type and payload.
    * @returns {any} The result of the dispatch action.
    */
-  DISPATCH: (action: actionType) => void;
+  DISPATCH: (action: commitType) => void;
 
   /**
    * Retrieves the current state of the store.
@@ -55,7 +55,7 @@ export type renderType = React.Dispatch<React.SetStateAction<number>>;
  *
  * @typedef {(state: unknown) => unknown} selectoType
  */
-export type selectoType = () => unknown;
+export type selectoType = (state: any) => unknown;
 
 /**
  * Type for a callback function that selects and returns a part of the state.
@@ -63,7 +63,7 @@ export type selectoType = () => unknown;
  * @template T
  * @typedef {(state: unknown) => T} selectorCallbackType
  */
-export type selectorCallbackType<T = unknown> = () => T;
+export type selectorCallbackType<T = unknown> = (s: any) => T;
 
 /**
  * Type representing a map that associates render functions with selector values.
@@ -76,22 +76,22 @@ export type selectorMapType<T = unknown> = Map<renderType, T>;
 /**
  * Type representing an action dispatched to the store.
  *
- * @typedef {{ type: string; payload: string }} actionType
+ * @typedef {{ type: string; payload: string }} commitType
  */
-export type actionType = {
+export type commitType = {
   payload: any;
+  commit: string;
   event?: string;
-  mutation: Function;
 };
 
 /**
  * Type representing a reducer function that updates the store's state.
  *
- * @typedef {(state: unknown, action: actionType | {}, root?: unknown) => unknown} reducerType
+ * @typedef {(state: unknown, action: commitType | {}, root?: unknown) => unknown} reducerType
  */
 export type reducerType = (
   state: unknown,
-  action: actionType | {},
+  action: commitType | {},
   root?: unknown
 ) => unknown;
 

@@ -3,19 +3,20 @@ import { SomeComponent } from '../components';
 import {
   SelectorSuspense,
   useDispatch,
-  useModule,
+  useModuleMutation,
   useSelector,
 } from '../context';
 import { useContext, useEffect } from 'react';
 export const HomePage = () => {
+  console.log('render');
   // const dispatch = useDispatch();
-  const { mutate, mutations } = useModule('counter');
+  const { mutate } = useModuleMutation('counter');
   // console.log('MODULE', state);
   const incAge = () => {
     mutate({
       payload: 1,
       event: 'INC_AGE',
-      mutation: mutations.inc,
+      commit: 'inc',
     });
     // dispatch({
     //   payload: 1,
@@ -35,6 +36,7 @@ export const HomePage = () => {
     <>
       <button onClick={incAge}>inc age</button>
       {/* <span>{value}</span> */}
+      <SomeComponent />
     </>
     // <SelectorSuspense
     //   options={{

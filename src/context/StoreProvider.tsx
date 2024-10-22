@@ -6,12 +6,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import {
-  actionType,
-  IStore,
-  ModuleType,
-  selectorCallbackType,
-} from './store.types';
+import { IStore, selectorCallbackType } from './store.types';
 import { StoreService } from './StoreService';
 
 const StoreContext = createContext<IStore | undefined>(undefined);
@@ -21,12 +16,11 @@ const StoreContext = createContext<IStore | undefined>(undefined);
  * @param {PropsWithChildren<{store: any}>} props - The children components and store object.
  * @returns {JSX.Element} The context provider with the store service.
  */
-function EventStoreProvider<T = unknown>({
+function EventStoreProvider({
   children,
-  store,
   modules,
-}: PropsWithChildren<{ store: any; modules: any }>) {
-  const [storeSerivce, _] = useState<any>(new StoreService(store, modules));
+}: PropsWithChildren<{ modules: any }>) {
+  const [storeSerivce, _] = useState<any>(new StoreService(modules));
   return (
     <StoreContext.Provider value={storeSerivce}>
       <>
@@ -70,7 +64,6 @@ function useSelector<T>(
   moduleName: string
 ) {
   const ctx = useContext(StoreContext)!;
-  console.log('undefined', callback.name);
 
   const [_, render] = useState<number>(0);
   let selector = useRef<any>(null);
@@ -95,52 +88,15 @@ function useSelector<T>(
   };
 }
 
-/**
- * Combines multiple reducers into one root reducer.
- *
- * @param {object} param - An object where each key is a reducer function.
- * @returns {function} A root reducer function handling all sub-reducers.
- */
-const combineReducer = (param: { [key: string]: any }) => {
-  const rootState = (() => {
-    let rootState: { [key: string]: any } = {};
-    Object.entries(param).forEach(([key, _]) => {
-      rootState[key] = param[key](undefined, {});
-    });
-    return rootState;
-  })();
-  return (state = rootState, action: actionType) => {
-    Object.entries(param).forEach(([key, _]) => {
-      state = {
-        ...state,
-        [key]: param[key](state[key], action, rootState),
-      };
-    });
-    return state;
-  };
-};
-
-const useModule = (moduleName: string) => {
+const useModuleMutation = (moduleName: string) => {
   const ctx = useContext(StoreContext) as any;
-  // console.log('ctx', ctx.GET_MODULE(moduleName));
-  return ctx.GET_MODULE(moduleName);
-  // return {
-  //   // mutations: { ...ctx.modules[moduleName].mutation },
-  //   // getters: { ...ctx.modules[moduleName].getters },
-  //   // dispatch: function ({ ...args }) {
-  //   //   ctx.DISPATCH({
-  //   //     moduleName,
-  //   //     ...args,
-  //   //   });
-  //   // },
-  // };
+  return ctx.MUTATION_COMMIT(moduleName);
 };
 
 export {
-  combineReducer,
   EventStoreProvider,
   useDispatch,
+  useModuleMutation,
   useSelector,
   useStoreClient,
-  useModule,
 };
