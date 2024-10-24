@@ -1,15 +1,12 @@
-import { useSelector } from '../context';
+import { useModuleSelector } from '../context';
 
 const SomeComponent = () => {
-  const v = useSelector(
-    (state) => {
-      console.log('****************************', state);
-      return 32;
-    },
-    ['INC_AGE'],
-    'counter'
-  );
-  // console.log('dsdshkdsjds', v);
+  const selector = useModuleSelector({
+    getter: 'getCounter',
+    commit: ['INC_AGE'],
+    moduleName: 'counter',
+  });
+  console.log('useModuleSelector', selector);
   return (
     <>
       <span>SomeComponent</span>

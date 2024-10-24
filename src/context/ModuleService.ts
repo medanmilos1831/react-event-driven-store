@@ -1,4 +1,4 @@
-import { actionType, selectoType, renderType, ModuleType } from './store.types';
+import { ModuleType } from './store.types';
 
 class ModuleService<T> {
   moduleName!: string;

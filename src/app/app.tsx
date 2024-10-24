@@ -15,7 +15,6 @@ export const App = () => {
             mutation: {
               inc(value) {
                 this.counter = this.counter + value.payload;
-                // console.log('counter', this.counter);
               },
               dec() {
                 this.counter = this.counter - 1;

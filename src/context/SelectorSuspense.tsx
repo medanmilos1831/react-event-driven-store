@@ -5,7 +5,7 @@ import {
   useContext,
 } from 'react';
 import { ISelectorSuspense, ItemProps } from './store.types';
-import { useSelector } from './StoreProvider';
+// import { useSelector } from './StoreProvider';
 
 /**
  * Context for providing selector suspense values.
@@ -30,9 +30,9 @@ const SelectorSuspense = ({
   children,
   options,
 }: PropsWithChildren<{ options: ISelectorSuspense }>) => {
-  const { value } = useSelector(options.selector, options.events);
+  // const { value } = useSelector(options.selector, options.events);
   return (
-    <SelectorSuspenseContext.Provider value={value}>
+    <SelectorSuspenseContext.Provider value={undefined}>
       {children}
     </SelectorSuspenseContext.Provider>
   );
