@@ -1,10 +1,19 @@
+import { useState } from 'react';
 import { EventStoreProvider } from '../context';
 import { HomePage } from '../pages';
 import { ModuleType } from 'src/context/store.types';
 
 export const App = () => {
+  const [state, setState] = useState(0);
   return (
     <>
+      <button
+        onClick={() => {
+          setState((prev) => prev + 1);
+        }}
+      >
+        {state}
+      </button>
       <EventStoreProvider
         modules={[
           {

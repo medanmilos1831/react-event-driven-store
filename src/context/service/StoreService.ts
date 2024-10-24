@@ -1,5 +1,5 @@
+import { commitType, ModuleType } from '../store.types';
 import { ModuleService } from './ModuleService';
-import { commitType, ModuleType } from './store.types';
 
 export class StoreService<T> extends EventTarget {
   modules: any = {};
