@@ -20,6 +20,7 @@ export const App = () => {
             moduleName: 'counter',
             state: {
               counter: 0,
+              fname: 'Milos',
             },
             mutation: {
               inc(value) {
@@ -27,14 +28,18 @@ export const App = () => {
               },
               dec() {
                 this.counter = this.counter - 1;
+                this.fname;
               },
             },
             getters: {
               getCounter() {
-                return this.counter;
+                return {
+                  counter: this.counter,
+                };
               },
+              getPera() {},
             },
-          } as ModuleType<{ counter: number }>,
+          } as ModuleType<{ counter: number; fname: string }>,
         ]}
       >
         <HomePage />

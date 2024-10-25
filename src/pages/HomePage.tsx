@@ -3,7 +3,6 @@ import { SomeComponent } from '../components';
 import { useModuleMutation } from '../context';
 export const HomePage = () => {
   console.log('HomePage');
-  // const [couter, setCounter] = useState(0);
   const { mutate } = useModuleMutation('counter');
   const incAge = () => {
     mutate({
