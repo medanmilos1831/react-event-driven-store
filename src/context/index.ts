@@ -1,2 +1,2 @@
 export * from './StoreProvider';
-export * from './SelectorSuspense';
+export * from './components/SelectorItem';

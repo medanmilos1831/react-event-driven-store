@@ -1,5 +1,7 @@
-import { SelectorSuspense, useModuleSelector } from '../context';
-
+import { SelectorItem, useModuleSelector } from '../context';
+interface IPera {
+  counter: number;
+}
 const SomeComponent = () => {
   // const { value } = useModuleSelector<{
   //   counter: number;
@@ -10,18 +12,22 @@ const SomeComponent = () => {
   // });
   // let { counter } = value;
   // console.log('*********', counter);
+  console.log('render');
   return (
     <>
       <span>SomeComponent</span>
-      <SelectorSuspense
+      <SelectorItem<IPera>
         selectorConfig={{
           getterName: 'getCounter',
           commit: ['INC_AGE'],
           moduleName: 'counter',
         }}
       >
-        <SelectorSuspense.Item></SelectorSuspense.Item>
-      </SelectorSuspense>
+        {(value) => {
+          console.log('value', value.counter);
+          return <></>;
+        }}
+      </SelectorItem>
     </>
   );
 };
