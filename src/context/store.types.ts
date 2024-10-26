@@ -35,6 +35,6 @@ export type ItemProps<T> = { children: (value: T) => JSX.Element };
 export interface ModuleType<T = unknown> {
   moduleName: string;
   state: T;
-  mutation: { [key: string]: (this: T, args: any) => void };
-  getters: { [key: string]: (this: T) => any };
+  mutation?: { [key: string]: (this: T, args: any) => void };
+  getters?: { [key: string]: (this: T) => any };
 }

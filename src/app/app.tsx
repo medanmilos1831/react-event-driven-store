@@ -2,7 +2,14 @@ import { useState } from 'react';
 import { EventStoreProvider } from '../context';
 import { HomePage } from '../pages';
 import { ModuleType } from 'src/context/store.types';
+interface IZika {
+  counter: number;
+  fname: string;
+}
 
+interface IPera {
+  lname: string;
+}
 export const App = () => {
   const [state, setState] = useState(0);
   return (
@@ -14,7 +21,7 @@ export const App = () => {
       >
         {state}
       </button>
-      <EventStoreProvider
+      <EventStoreProvider<[ModuleType<IZika>, ModuleType<IPera>]>
         modules={[
           {
             moduleName: 'counter',
@@ -39,7 +46,31 @@ export const App = () => {
               },
               getPera() {},
             },
-          } as ModuleType<{ counter: number; fname: string }>,
+          },
+          {
+            moduleName: 'nesto',
+            state: {
+              lname: 'Milos',
+            },
+            mutation: {
+              inc(value) {
+                this.lname;
+                // this.counter = this.counter + value.payload;
+              },
+              // dec() {
+              //   this.counter = this.counter - 1;
+              //   this.fname;
+              // },
+            },
+            getters: {
+              getCounter() {
+                return {
+                  lname: this.lname,
+                };
+              },
+              getPera() {},
+            },
+          },
         ]}
       >
         <HomePage />

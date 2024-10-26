@@ -4,10 +4,10 @@ import { StoreContext } from './context';
 import { useModuleMutation, useModuleSelector, useStoreClient } from './hooks';
 import { ModuleType } from './store.types';
 
-function EventStoreProvider({
+function EventStoreProvider<T extends ModuleType<any>[] | any[]>({
   children,
   modules,
-}: PropsWithChildren<{ modules: ModuleType<any>[] }>) {
+}: PropsWithChildren<{ modules: T }>) {
   let storeService = useRef<StoreService | null>(null);
   if (!storeService.current) {
     storeService.current = new StoreService(modules);
