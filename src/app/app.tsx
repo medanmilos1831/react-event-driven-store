@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { EventStoreProvider } from '../context';
 import { HomePage } from '../pages';
 import { ModuleType } from 'src/context/store.types';
-interface IZika {
+interface ICounter {
   counter: number;
   fname: string;
 }
 
-interface IPera {
+interface IPerson {
   lname: string;
 }
 export const App = () => {
@@ -21,7 +21,7 @@ export const App = () => {
       >
         {state}
       </button>
-      <EventStoreProvider<[ModuleType<IZika>, ModuleType<IPera>]>
+      <EventStoreProvider<[ModuleType<ICounter>, ModuleType<IPerson>]>
         modules={[
           {
             moduleName: 'counter',
@@ -55,12 +55,7 @@ export const App = () => {
             mutation: {
               inc(value) {
                 this.lname;
-                // this.counter = this.counter + value.payload;
               },
-              // dec() {
-              //   this.counter = this.counter - 1;
-              //   this.fname;
-              // },
             },
             getters: {
               getCounter() {

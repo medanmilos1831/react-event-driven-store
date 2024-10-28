@@ -17,8 +17,8 @@ export class StoreService extends EventTarget {
     isEmitter = false,
   }: {
     eventName: string;
-    data?: any;
-    isEmitter?: boolean;
+    data: unknown;
+    isEmitter: boolean;
   }) {
     let customEvent = new CustomEvent(eventName, {
       detail: isEmitter
@@ -60,13 +60,15 @@ export class StoreService extends EventTarget {
         if (event) {
           self.PUBLISH_EVENT({
             eventName: event,
+            data: undefined,
+            isEmitter: false,
           });
         }
       },
     };
   }
 
-  EMIT_EVENT = (eventName: string, data: any) => {
+  EMIT_EVENT = (eventName: string, data: unknown) => {
     this.PUBLISH_EVENT({
       eventName,
       data,

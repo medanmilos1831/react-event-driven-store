@@ -4,7 +4,7 @@ export interface IStore extends EventTarget {
   EMIT_EVENT: EMIT_EVENT;
 }
 
-type EMIT_EVENT = (data: any) => void;
+type EMIT_EVENT = (eventName: string, data: unknown) => void;
 export type SELECTOR_FACTORY<S = any> = () => {
   subscriber(this: Omit<moduleSelectorType, 'commit'>): S;
 };
