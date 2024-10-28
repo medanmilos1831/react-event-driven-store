@@ -21,7 +21,7 @@ export const App = () => {
       >
         {state}
       </button>
-      <EventStoreProvider<[ModuleType<ICounter>, ModuleType<IPerson>]>
+      <EventStoreProvider<[ModuleType<ICounter>]>
         modules={[
           {
             moduleName: 'counter',
@@ -42,25 +42,6 @@ export const App = () => {
               getCounter() {
                 return {
                   counter: this.counter,
-                };
-              },
-              getPera() {},
-            },
-          },
-          {
-            moduleName: 'nesto',
-            state: {
-              lname: 'Milos',
-            },
-            mutation: {
-              inc(value) {
-                this.lname;
-              },
-            },
-            getters: {
-              getCounter() {
-                return {
-                  lname: this.lname,
                 };
               },
               getPera() {},
