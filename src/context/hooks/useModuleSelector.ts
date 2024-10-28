@@ -11,7 +11,10 @@ function useModuleSelector<V = any>({
   const [_, render] = useState<number>(0);
 
   useEffect(() => {
-    const listener = () => render((p) => ++p);
+    const listener = (e: any) => {
+      if (e.detail?.isEmitter) return;
+      render((p) => ++p);
+    };
     if (commit && commit.length > 0) {
       commit.forEach((eventName: string) => {
         ctx.addEventListener(eventName, listener);

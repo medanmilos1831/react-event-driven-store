@@ -1,3 +1,4 @@
+import { SomeComponentTwo } from '../components/SomeComponentTwo';
 import { SomeComponent } from '../components';
 import { useModuleMutation } from '../context';
 export const HomePage = () => {
@@ -17,6 +18,7 @@ export const HomePage = () => {
         counter inc {couter}
       </button> */}
       <SomeComponent />
+      <SomeComponentTwo />
     </>
   );
 };

@@ -11,8 +11,23 @@ export class StoreService extends EventTarget {
     });
   }
 
-  private PUBLISH_EVENT_ON_COMMIT(event: string) {
-    const customEvent = new CustomEvent(event);
+  private PUBLISH_EVENT({
+    eventName,
+    data,
+    isEmitter = false,
+  }: {
+    eventName: string;
+    data?: any;
+    isEmitter?: boolean;
+  }) {
+    let customEvent = new CustomEvent(eventName, {
+      detail: isEmitter
+        ? {
+            data,
+            isEmitter,
+          }
+        : null,
+    });
     this.dispatchEvent(customEvent);
   }
 
@@ -43,9 +58,19 @@ export class StoreService extends EventTarget {
           }
         );
         if (event) {
-          self.PUBLISH_EVENT_ON_COMMIT(event);
+          self.PUBLISH_EVENT({
+            eventName: event,
+          });
         }
       },
     };
   }
+
+  EMIT_EVENT = (eventName: string, data: any) => {
+    this.PUBLISH_EVENT({
+      eventName,
+      data,
+      isEmitter: true,
+    });
+  };
 }

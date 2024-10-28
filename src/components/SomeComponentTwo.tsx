@@ -1,12 +1,12 @@
-import { useSelectorSuspenseItem } from '../context';
+import { useOnEvent } from '../context';
 
 const SomeComponentTwo = () => {
-  const value = useSelectorSuspenseItem();
-  return (
-    <>
-      <h1>SomeComponentTwo {value.personAge}</h1>
-    </>
-  );
+  // const { onEmit } = useEmit();
+  useOnEvent('INC_AGE', (data: any) => {
+    console.log('pera', data);
+  });
+  // onEmit(() => {}, ['INC_AGE']);
+  return <>SomeComponentTwo</>;
 };
 
 export { SomeComponentTwo };

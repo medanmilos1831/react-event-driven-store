@@ -1,8 +1,9 @@
-import { SelectorItem, useModuleSelector } from '../context';
+import { SelectorItem, useEmitEvent, useModuleSelector } from '../context';
 interface IPera {
   counter: number;
 }
 const SomeComponent = () => {
+  const emitEvent = useEmitEvent();
   // const { value } = useModuleSelector<{
   //   counter: number;
   // }>({
@@ -12,7 +13,6 @@ const SomeComponent = () => {
   // });
   // let { counter } = value;
   // console.log('*********', counter);
-  console.log('render');
   return (
     <>
       <span>SomeComponent</span>
@@ -28,6 +28,15 @@ const SomeComponent = () => {
           return <></>;
         }}
       </SelectorItem>
+      <button
+        onClick={() =>
+          emitEvent('INC_AGE', {
+            fname: 'Milos',
+          })
+        }
+      >
+        Emit event
+      </button>
     </>
   );
 };
