@@ -1,41 +1,24 @@
 import { SomeComponentTwo } from '../components/SomeComponentTwo';
 import { SomeComponent } from '../components';
-import { SelectorSuspense, useDispatch, useSelector } from '../context';
+import { useModuleMutation } from '../context';
 export const HomePage = () => {
-  const dispatch = useDispatch();
+  console.log('HomePage');
+  const { mutate } = useModuleMutation('counter');
   const incAge = () => {
-    dispatch({
-      type: 'INC_AGE',
+    mutate({
       payload: 1,
+      event: 'INC_AGE',
+      commit: 'inc',
     });
   };
-
   return (
-    <SelectorSuspense
-      options={{
-        events: ['INC_AGE'],
-        selector: (state: any) => {
-          return {
-            personAge: state.age,
-          };
-        },
-      }}
-    >
-      <div>
-        <div>
-          <SomeComponent />
-        </div>
-        <SelectorSuspense.Item>
-          <SomeComponentTwo />
-        </SelectorSuspense.Item>
-
-        <SelectorSuspense.Item>
-          {(value) => {
-            return <>{value.personAge}</>;
-          }}
-        </SelectorSuspense.Item>
-        <button onClick={incAge}>inc age</button>
-      </div>
-    </SelectorSuspense>
+    <>
+      <button onClick={incAge}>inc age</button>
+      {/* <button onClick={() => setCounter((prev) => prev + 1)}>
+        counter inc {couter}
+      </button> */}
+      <SomeComponent />
+      <SomeComponentTwo />
+    </>
   );
 };

@@ -1,10 +1,20 @@
-import { useSelectorSuspenseItem } from '../context';
+import { useState } from 'react';
+import { useOnEvent } from '../context';
 
 const SomeComponentTwo = () => {
-  const value = useSelectorSuspenseItem();
+  const [state, setState] = useState(0);
+  useOnEvent('INC_AGE', (data) => {
+    console.log('pera', data, state);
+  });
   return (
     <>
-      <h1>SomeComponentTwo {value.personAge}</h1>
+      <button
+        onClick={() => {
+          setState((prev: any) => prev + 1);
+        }}
+      >
+        {state}
+      </button>
     </>
   );
 };
