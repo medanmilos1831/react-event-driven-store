@@ -25,16 +25,9 @@ export type commitType = {
   event?: string;
 };
 
-export interface ISelectorSuspense {
-  events: string[];
-  selector: selectorCallbackType;
-}
-
-export type ItemProps<T> = { children: (value: T) => JSX.Element };
-
 export interface ModuleType<T = unknown> {
   moduleName: string;
   state: T;
   mutation?: { [key: string]: (this: T, args: any) => void };
-  getters?: { [key: string]: (this: T) => any };
+  getters?: { [key: string]: (this: T) => any } | undefined;
 }

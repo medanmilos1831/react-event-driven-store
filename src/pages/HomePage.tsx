@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { SomeComponent } from '../components';
 import { useModuleMutation } from '../context';
 export const HomePage = () => {

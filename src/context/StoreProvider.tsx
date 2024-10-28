@@ -1,7 +1,6 @@
 import { PropsWithChildren, useRef } from 'react';
 import { StoreService } from './service/StoreService';
 import { StoreContext } from './context';
-import { useModuleMutation, useModuleSelector, useStoreClient } from './hooks';
 import { ModuleType } from './store.types';
 
 function EventStoreProvider<T extends ModuleType<any>[] | any[]>({
@@ -19,9 +18,4 @@ function EventStoreProvider<T extends ModuleType<any>[] | any[]>({
   );
 }
 
-export {
-  EventStoreProvider,
-  useModuleMutation,
-  useModuleSelector,
-  useStoreClient,
-};
+export { EventStoreProvider };

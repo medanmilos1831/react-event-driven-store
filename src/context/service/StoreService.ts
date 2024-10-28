@@ -20,9 +20,11 @@ export class StoreService extends EventTarget {
     let self = this;
     return {
       subscriber(this: Omit<moduleSelectorType, 'commit'>) {
-        let result = self.modules[this.moduleName].getters[
-          this.getterName
-        ].call(self.modules[this.moduleName].state);
+        let getters = self.modules[this.moduleName].getters;
+        if (!getters) return;
+        let result = getters[this.getterName].call(
+          self.modules[this.moduleName].state
+        );
         return result as S;
       },
     };
@@ -32,6 +34,7 @@ export class StoreService extends EventTarget {
     let self = this;
     return {
       mutate({ payload, commit, event }: commitType) {
+        if (!self.modules[moduleName].mutation) return;
         self.modules[moduleName].mutation[commit].call(
           self.modules[moduleName].state,
           {
