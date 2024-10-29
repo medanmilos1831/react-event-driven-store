@@ -1,22 +1,10 @@
-import { useState } from 'react';
 import { useOnEvent } from '../context';
 
 const SomeComponentTwo = () => {
-  const [state, setState] = useState(0);
-  useOnEvent('INC_AGE', (data) => {
-    console.log('pera', data, state);
+  useOnEvent('EMIT_AGE', (data) => {
+    console.log('on event', data);
   });
-  return (
-    <>
-      <button
-        onClick={() => {
-          setState((prev: any) => prev + 1);
-        }}
-      >
-        {state}
-      </button>
-    </>
-  );
+  return <></>;
 };
 
 export { SomeComponentTwo };

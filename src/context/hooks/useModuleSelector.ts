@@ -34,7 +34,7 @@ function useModuleSelector<V = any>({
       getterName,
       moduleName,
       render,
-    })(),
+    })()!,
   };
 }
 
