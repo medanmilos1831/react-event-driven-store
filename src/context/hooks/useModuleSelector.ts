@@ -4,7 +4,7 @@ import { moduleSelectorType } from '../store.types';
 
 function useModuleSelector<V = any>({
   getterName,
-  commit,
+  updateOnEvents,
   moduleName,
 }: moduleSelectorType) {
   const ctx = useContext(StoreContext)!;
@@ -15,15 +15,15 @@ function useModuleSelector<V = any>({
       if (e.detail?.isEmitter) return;
       render((p) => ++p);
     };
-    if (commit && commit.length > 0) {
-      commit.forEach((eventName: string) => {
+    if (updateOnEvents && updateOnEvents.length > 0) {
+      updateOnEvents.forEach((eventName: string) => {
         ctx.addEventListener(eventName, listener);
       });
     }
 
     return () => {
-      if (commit && commit.length > 0) {
-        commit.forEach((eventName: string) => {
+      if (updateOnEvents && updateOnEvents.length > 0) {
+        updateOnEvents.forEach((eventName: string) => {
           ctx.removeEventListener(eventName, listener);
         });
       }

@@ -34,7 +34,7 @@ export class StoreService extends EventTarget {
   SELECTOR_FACTORY<S = unknown>() {
     let self = this;
     return {
-      subscriber(this: Omit<moduleSelectorType, 'commit'>) {
+      subscriber(this: Omit<moduleSelectorType, 'updateOnEvents'>) {
         let getters = self.modules[this.moduleName].getters;
         if (!getters) return;
         let result = getters[this.getterName].call(
@@ -45,10 +45,10 @@ export class StoreService extends EventTarget {
     };
   }
 
-  MUTATION_COMMIT(moduleName: string) {
+  MUTATION_COMMIT() {
     let self = this;
     return {
-      mutate({ payload, commit, event }: commitType) {
+      mutateState({ payload, commit, event, moduleName }: commitType) {
         if (!self.modules[moduleName].mutation) return;
         self.modules[moduleName].mutation[commit].call(
           self.modules[moduleName].state,

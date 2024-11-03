@@ -1,9 +1,11 @@
 import { ModuleType } from 'src/context/store.types';
 import { EventStoreProvider } from '../context';
 import { HomePage } from '../pages';
+
 interface ICounter {
   counter: number;
 }
+
 export const App = () => {
   return (
     <>
@@ -28,7 +30,6 @@ export const App = () => {
                   counter: this.counter,
                 };
               },
-              getPera() {},
             },
           },
         ]}

@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { StoreContext } from '../context';
 
-const useModuleMutation = (moduleName: string) => {
+const useStateMutation = () => {
   const ctx = useContext(StoreContext)!;
-  return ctx.MUTATION_COMMIT(moduleName);
+  return ctx.MUTATION_COMMIT();
 };
 
-export { useModuleMutation };
+export { useStateMutation };

@@ -10,12 +10,12 @@ export type SELECTOR_FACTORY<S = any> = () => {
 };
 
 type MUTATION_COMMIT = () => {
-  mutate(params: commitType): void;
+  mutateState(params: commitType): void;
 };
 
 export type moduleSelectorType = {
   getterName: string;
-  commit: string[];
+  updateOnEvents: string[];
   moduleName: string;
 };
 
@@ -25,6 +25,7 @@ export type commitType = {
   payload: any;
   commit: string;
   event?: string;
+  moduleName: string;
 };
 
 export interface ModuleType<T = unknown> {
