@@ -34,12 +34,13 @@ export class StoreService extends EventTarget {
   SELECTOR_FACTORY<S = unknown>() {
     let self = this;
     return {
-      subscriber(this: Omit<moduleSelectorType, 'updateOnEvents'>) {
-        let getters = self.modules[this.moduleName].getters;
+      subscriber({
+        getterName,
+        moduleName,
+      }: Omit<moduleSelectorType, 'updateOnEvents'>) {
+        let getters = self.modules[moduleName].getters;
         if (!getters) return;
-        let result = getters[this.getterName].call(
-          self.modules[this.moduleName].state
-        );
+        let result = getters[getterName].call(self.modules[moduleName].state);
         return result as S;
       },
     };

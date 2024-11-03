@@ -30,11 +30,7 @@ function useModuleSelector<V = any>({
     };
   }, []);
   return {
-    value: ctx.SELECTOR_FACTORY<V>().subscriber.bind({
-      getterName,
-      moduleName,
-      render,
-    })()!,
+    value: ctx.SELECTOR_FACTORY<V>().subscriber({ getterName, moduleName }),
   };
 }
 
