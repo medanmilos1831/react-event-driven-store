@@ -1,14 +1,17 @@
 import { commitType, moduleSelectorType, ModuleType } from '../store.types';
+import { LogsService } from './LogsService';
 import { ModuleService } from './ModuleService';
 
 export class StoreService extends EventTarget {
   modules: { [key: string]: ModuleService } = {};
+  private logsService = new LogsService();
 
-  constructor(modules: ModuleType[]) {
+  constructor(modules: ModuleType[], logs: boolean) {
     super();
     modules.forEach((item) => {
       this.modules[item.moduleName] = new ModuleService(item);
     });
+    this.logsService.showLogs = logs;
   }
 
   private PUBLISH_EVENT({
@@ -29,6 +32,7 @@ export class StoreService extends EventTarget {
         : null,
     });
     this.dispatchEvent(customEvent);
+    this.logsService.logGenerator();
   }
 
   SELECTOR_FACTORY<S = unknown>() {
@@ -59,6 +63,11 @@ export class StoreService extends EventTarget {
           }
         );
         if (event) {
+          self.logsService.addLog({
+            eventName: event,
+            payload,
+            state: structuredClone(self.modules[moduleName].state),
+          });
           self.PUBLISH_EVENT({
             eventName: event,
             data: undefined,

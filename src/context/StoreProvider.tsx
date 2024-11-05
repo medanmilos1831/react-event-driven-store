@@ -6,10 +6,11 @@ import { ModuleType } from './store.types';
 function EventStoreProvider<T extends ModuleType<any>[] | any[]>({
   children,
   modules,
-}: PropsWithChildren<{ modules: T }>) {
+  logs = false,
+}: PropsWithChildren<{ modules: T; logs?: boolean }>) {
   let storeService = useRef<StoreService | null>(null);
   if (!storeService.current) {
-    storeService.current = new StoreService(modules);
+    storeService.current = new StoreService(modules, logs);
   }
   return (
     <StoreContext.Provider value={storeService.current}>

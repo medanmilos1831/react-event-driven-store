@@ -16,6 +16,18 @@ export const HomePage = () => {
       >
         Increment age
       </button>
+      <button
+        onClick={() =>
+          mutateState({
+            payload: 1,
+            event: 'DEc',
+            commit: 'dec',
+            moduleName: 'counter',
+          })
+        }
+      >
+        Decrement age
+      </button>
       <SomeComponent />
     </>
   );

@@ -33,6 +33,7 @@ export const App = () => {
             },
           },
         ]}
+        logs
       >
         <HomePage />
       </EventStoreProvider>
