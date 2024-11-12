@@ -1,10 +1,16 @@
-import { useOnEvent } from '../context';
+import { useModuleSelector, useOnEvent } from '../context';
 
 const SomeComponentTwo = () => {
-  useOnEvent('EMIT_AGE', (data) => {
-    console.log('on event', data);
+  useOnEvent('INC', (data) => {
+    console.log('ON EVENT', data);
   });
-  return <></>;
+  const { value } = useModuleSelector({
+    moduleName: 'counter',
+    getterName: 'getCounter',
+    updateOnEvents: ['INC'],
+  });
+  // console.log('*******RENDER********', value);
+  return <>SomeComponentTwo</>;
 };
 
 export { SomeComponentTwo };

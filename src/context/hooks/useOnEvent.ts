@@ -6,7 +6,8 @@ const useOnEvent = (eventName: string, callback: (data: any) => void) => {
 
   useEffect(() => {
     const listener = (e: any) => {
-      callback(e.detail.data);
+      if (!e.detail?.isEmitter) return;
+      callback(e.detail?.data);
     };
     ctx.addEventListener(eventName, listener);
     return () => {

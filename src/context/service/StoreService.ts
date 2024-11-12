@@ -65,7 +65,7 @@ export class StoreService extends EventTarget {
   }) {
     // Create a custom event with optional data if it’s an emitter event
     const customEvent = new CustomEvent(eventName, {
-      detail: isEmitter ? { data, isEmitter } : null,
+      detail: { data, isEmitter },
     });
     // Dispatch the event and log it if logging is enabled
     this.dispatchEvent(customEvent);

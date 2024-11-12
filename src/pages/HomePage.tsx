@@ -1,42 +1,32 @@
+import { SomeComponentTwo } from '../components/SomeComponentTwo';
 import { SomeComponent } from '../components';
 import { useStateMutation, useEmitEvent } from '../context';
 export const HomePage = () => {
-  const { mutateState } = useStateMutation();
   const emit = useEmitEvent();
+  const { mutateState } = useStateMutation();
   return (
     <>
       <button
-        onClick={() =>
+        onClick={() => {
           mutateState({
             payload: 1,
             event: 'INC',
             commit: 'inc',
             moduleName: 'counter',
-          })
-        }
+          });
+        }}
       >
-        Increment age
-      </button>
-      <button
-        onClick={() =>
-          mutateState({
-            payload: 1,
-            event: 'DEc',
-            commit: 'dec',
-            moduleName: 'counter',
-          })
-        }
-      >
-        Decrement age
+        MUTATE
       </button>
       <button
         onClick={() => {
-          emit('pera');
+          emit('INC', 'data koja je poslata kroz event');
         }}
       >
-        Emit event
+        event
       </button>
-      <SomeComponent />
+      <SomeComponentTwo />
+      {/* <SomeComponent /> */}
     </>
   );
 };

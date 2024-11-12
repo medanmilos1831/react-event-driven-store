@@ -10,27 +10,28 @@ export const App = () => {
   return (
     <>
       <EventStoreProvider
-      // modules={[
-      //   {
-      //     moduleName: 'counter',
-      //     state: {
-      //       counter: 0,
-      //     },
-      //     mutation: {
-      //       inc(value) {
-      //         this.counter = this.counter + value.payload;
-      //       },
-      //       dec() {
-      //         this.counter = this.counter - 1;
-      //       },
-      //     },
-      //     getters: {
-      //       getCounter() {
-      //         return this.counter;
-      //       },
-      //     },
-      //   },
-      // ]}
+        modules={[
+          {
+            moduleName: 'counter',
+            state: {
+              counter: 0,
+            },
+            mutation: {
+              inc(value) {
+                this.counter = this.counter + value.payload;
+              },
+              dec() {
+                this.counter = this.counter - 1;
+              },
+            },
+            getters: {
+              getCounter() {
+                return this.counter;
+              },
+            },
+          },
+        ]}
+        // logs
       >
         <HomePage />
       </EventStoreProvider>
