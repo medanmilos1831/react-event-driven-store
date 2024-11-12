@@ -6,7 +6,7 @@ function SelectorItem<V = any>({
   children,
   selectorConfig,
 }: {
-  children: (value: V) => ReactNode;
+  children: (value: V | undefined) => ReactNode;
   selectorConfig: moduleSelectorType;
 }) {
   const { value } = useModuleSelector<V>(selectorConfig);
