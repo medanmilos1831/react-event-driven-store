@@ -1,3 +1,4 @@
 export * from './StoreProvider';
-export * from './components/SelectorItem';
 export * from './hooks';
+export { type ModuleType } from './store.types';
+export { SelectorItem } from './components/SelectorItem';
