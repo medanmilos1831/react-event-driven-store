@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { StoreContext } from '../context';
 
-const useOnEvent = (eventName: string, callback: (data: unknown) => void) => {
+const useOnEvent = (eventName: string, callback: (data: any) => void) => {
   const ctx = useContext(StoreContext)!;
 
   useEffect(() => {

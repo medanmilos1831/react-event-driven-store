@@ -1,15 +1,15 @@
 export interface IStore extends EventTarget {
-  SELECTOR_FACTORY: SELECTOR_FACTORY;
-  MUTATION_COMMIT: MUTATION_COMMIT;
-  EMIT_EVENT: EMIT_EVENT;
+  selectorFactory: selectorFactoryType;
+  mutationCommit: mutationCommitType;
+  emitEvent: emitEventType;
 }
 
-type EMIT_EVENT = (eventName: string, data: unknown) => void;
-export type SELECTOR_FACTORY<S = any> = () => {
+type emitEventType = (eventName: string, data: unknown) => void;
+export type selectorFactoryType<S = any> = () => {
   subscriber(this: Omit<moduleSelectorType, 'commit'>): S;
 };
 
-type MUTATION_COMMIT = () => {
+type mutationCommitType = () => {
   mutateState(params: commitType): void;
 };
 

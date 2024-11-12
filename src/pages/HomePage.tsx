@@ -1,7 +1,8 @@
 import { SomeComponent } from '../components';
-import { useStateMutation } from '../context';
+import { useStateMutation, useEmitEvent } from '../context';
 export const HomePage = () => {
   const { mutateState } = useStateMutation();
+  const emit = useEmitEvent();
   return (
     <>
       <button
@@ -27,6 +28,13 @@ export const HomePage = () => {
         }
       >
         Decrement age
+      </button>
+      <button
+        onClick={() => {
+          emit('pera');
+        }}
+      >
+        Emit event
       </button>
       <SomeComponent />
     </>

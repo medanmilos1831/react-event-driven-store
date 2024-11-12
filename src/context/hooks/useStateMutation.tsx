@@ -3,7 +3,7 @@ import { StoreContext } from '../context';
 
 const useStateMutation = () => {
   const ctx = useContext(StoreContext)!;
-  return ctx.MUTATION_COMMIT();
+  return ctx.mutationCommit();
 };
 
 export { useStateMutation };
