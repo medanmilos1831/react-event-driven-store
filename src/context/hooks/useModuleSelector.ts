@@ -9,6 +9,7 @@ function useModuleSelector<V = any>({
 }: moduleSelectorType) {
   const ctx = useContext(StoreContext)!;
   const [_, render] = useState<number>(0);
+  const [selector, __] = useState(() => ctx.selectorFactory<V>());
 
   useEffect(() => {
     const listener = (e: any) => {
@@ -30,7 +31,7 @@ function useModuleSelector<V = any>({
     };
   }, []);
   return {
-    value: ctx.SELECTOR_FACTORY<V>().subscriber({ getterName, moduleName }),
+    value: selector.subscriber({ getterName, moduleName }),
   };
 }
 

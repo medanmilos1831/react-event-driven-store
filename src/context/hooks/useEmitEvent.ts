@@ -3,7 +3,7 @@ import { StoreContext } from '../context';
 
 const useEmitEvent = () => {
   const ctx = useContext(StoreContext)!;
-  return ctx.EMIT_EVENT;
+  return ctx.emitEvent;
 };
 
 export { useEmitEvent };
