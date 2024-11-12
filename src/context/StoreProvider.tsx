@@ -9,10 +9,6 @@ function EventStoreProvider<T extends ModuleType<any>[] | any[]>({
   logs = false,
 }: PropsWithChildren<{ modules?: T; logs?: boolean }>) {
   const [state, _] = useState(init);
-  // let storeService = useRef<StoreService | null>(null);
-  // if (!storeService.current) {
-  //   storeService.current = new StoreService(modules, logs);
-  // }
   function init() {
     return new StoreService(modules, logs);
   }
